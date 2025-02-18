@@ -4,15 +4,15 @@ module reg_8 (
 	input  logic 		  Shift_In, 
 	input  logic 		  Load, 
 	input  logic 		  Shift_En,
-	input  logic [8:0]    D,
+	input  logic [7:0]    D,
 
 	output logic 		  Shift_Out,
-	output logic [8:0] 	  Data_Out
+	output logic [7:0] 	  Data_Out
 );
 
 
 
-	logic [8:0] Data_Out_d;
+	logic [7:0] Data_Out_d;
 
 	always_comb
 	begin
@@ -23,7 +23,7 @@ module reg_8 (
 		end
 		else if (Shift_En)
 		begin
-			Data_Out_d = { Shift_In, Data_Out[3:1] };
+			Data_Out_d = { Shift_In, Data_Out[7:1] };
 		end
 		else
 		begin
@@ -36,7 +36,7 @@ module reg_8 (
 	begin
 	 	 if (Reset) //notice, this is a sycnrhonous reset, which is recommended on the FPGA
 		 begin
-			Data_Out <= 8'h0;
+			Data_Out <= 8'h00;
 		 end
 		 else 
 		 begin

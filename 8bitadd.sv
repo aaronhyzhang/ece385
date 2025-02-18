@@ -1,4 +1,4 @@
-module 8bitadd (
+module bitadd8 (
     input logic [7:0] A,
     input logic [7:0] B,
     input logic       fn,
@@ -7,6 +7,8 @@ module 8bitadd (
 );
 
     logic [7:0] fn_8bit;
+    
+    logic c1, c2, c3, c4, c5, c6, c7;
 
     assign fn_8bit = {8{fn}};
 
