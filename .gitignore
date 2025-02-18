@@ -1,0 +1,34 @@
+# Ignore system files
+.DS_Store
+*.log
+*.swp
+
+# Ignore MacOS system files
+.CFUserTextEncoding
+.Trash/
+
+# Ignore common user directories
+.vscode/
+.cache/
+.config/
+.local/
+.ssh/
+.conda/
+.anaconda/
+.matplotlib/
+.stm32cubeide/
+.stm32cubemx/
+.stmcube/
+.stmcufinder/
+.Library/
+.Movies/
+.Music/
+.Pictures/
+.Public/
+
+# Ignore node_modules and project files
+node_modules/
+package-lock.json
+package.json
+yarn.lock
+
