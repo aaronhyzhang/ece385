@@ -27,7 +27,7 @@ module reg_1 (
 		end
 		else
 		begin
-			Data_Out_d = Data_Out_d; // Required to avoid synthesis inferring a latch
+			Data_Out_d = Data_Out; // Required to avoid synthesis inferring a latch
 		end
 
 	end

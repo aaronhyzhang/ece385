@@ -9,8 +9,12 @@ module testbench();
     logic [7:0] sw_i, A_val, B_val;
 	
 
-    //storing expected results
-//    logic [7:0] ans_1;
+    logic loadtrack, shifttrack, B1, B0;
+    
+    assign loadtrack = multiplier_toplevel.LoadA;
+    assign shifttrack = multiplier_toplevel.Shift_En;
+    assign B1 = B_val[1];
+    assign B0 = B_val[0];
 
 
     //set up clock
@@ -20,6 +24,11 @@ module testbench();
 
     always begin : CLOCK_GENERATION
 		#1 Clk = ~Clk;
+	end
+	
+	always @(posedge Clk) begin
+	   $display("[%0t] State: %s, LoadA: %b, Shift_En: %b, B1: %b, B0: %b", 
+	       $time, multiplier_toplevel.control_unit.curr_state.name(), loadtrack, shifttrack, B1, B0);
 	end
 
     multiplier_toplevel LUT (
@@ -46,25 +55,15 @@ module testbench();
         sw_i <= 8'b11000101;
         repeat (2) @(posedge Clk);
         reset_load_clear_i = 0;
-        repeat (2) @(posedge Clk);
+        repeat (6) @(posedge Clk);
         sw_i <= 8'b00000111;
         repeat (2) @(posedge Clk);
         run_i <= 1;
-        repeat (2) @(posedge Clk);
+        repeat (6) @(posedge Clk);
         run_i <= 0;
-        repeat (20) @(posedge Clk);
+        repeat (30) @(posedge Clk);
         
         
-        
-        
-        
-        
-                
-
-
-
-
-
         $display("Done");
         $finish();
     end

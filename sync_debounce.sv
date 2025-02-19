@@ -17,7 +17,8 @@ module sync_debounce (
 	output logic q
 );
 
-	logic ff1, ff2, q;
+	logic ff1, ff2;
+//	logic q;
 	logic [COUNTER_WIDTH : 0] counter;
 	
 

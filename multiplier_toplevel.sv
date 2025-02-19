@@ -49,6 +49,7 @@ module multiplier_toplevel(
     logic B_out;
     logic X_out;
     logic X_new;
+    logic clearXA;
     logic LoadA;                //from control unit
     logic Shift_En;             //from contol unit
     logic [7:0] Sum;            //from adder
@@ -70,17 +71,19 @@ module multiplier_toplevel(
     control control_unit(
         .Clk            (Clk),
         .run            (run_s),
-        .M              (B_out),
+        .M0             (B_out),
+        .M1             (B_val[1]),
         .reset          (reset_load_clear_s),
 
         .shift          (Shift_En),
         .fn             (fn),
-        .LoadA          (LoadA)
+        .LoadA          (LoadA),
+        .clearXA        (clearXA)
     );
 
     reg_8 reg_A (
 		.Clk            (Clk), 
-		.Reset          (reset_load_clear_s),
+		.Reset          (reset_load_clear_s | clearXA),
 
 		.Shift_In       (X_out), 
 		.Load           (LoadA), 
@@ -106,7 +109,7 @@ module multiplier_toplevel(
 
     reg_1 reg_X (
         .Clk            (Clk),
-        .Reset          (reset_load_clear_s),
+        .Reset          (reset_load_clear_s | clearXA),
 
         .Shift_In       (X_out),
         .Load           (LoadA),

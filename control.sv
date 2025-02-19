@@ -1,14 +1,18 @@
 module control (
-    input logic Clk, run, M, reset,
+    input logic Clk, run, M0, M1, reset,
     
-    output logic shift, fn, LoadA
+    output logic shift, fn, LoadA, clearXA
 );
-
+    //Need M0, and M1 because when we go to a shift state, it sets the SHIFT signal high
+    //but it also determines where to go next, before the shift is actually carried out
+    //so we need to look at B_val[1] not B_val[0]
+    //But at the start we don't have this problem so use B_val[0] because nothing is moved yet
 
     //Declare signals cur_state, next_state based on this enum
-	enum logic [5:0] {
+	enum logic [4:0] {
 		s_start, 
-		s_count0_shift, 
+		resetXA,     //need this state to clear XA is we doing b2b computations,
+		s_count0_shift,          //cant be above bc would clear A immediatly after finishing
         s_count0_add,
 		s_count1_shift,
         s_count1_add, 
@@ -23,18 +27,26 @@ module control (
         s_count6_shift, 
         s_count6_add,
 		s_count7_shift,
-        s_count7_add,
+        s_count7_sub,
 		s_done
 	} curr_state, next_state; 
     
 
     always_comb begin
+        clearXA = 1'b0;     //default don't clear XA
 		unique case (curr_state) 
 			s_start: 
 			begin
-                LoadA = 1'b1;
+                LoadA = 1'b0;
 				shift = 1'b0;
                 fn = 1'b0;
+			end
+			resetXA:
+			begin
+			     LoadA = 1'b0;
+			     shift = 1'b0;
+			     fn = 1'b0;
+			     clearXA = 1'b1;         //only state that clears XA
 			end
 
             s_count0_add:
@@ -79,7 +91,7 @@ module control (
                 shift = 1'b0;
                 fn = 1'b0;
             end
-            s_count7_add:
+            s_count7_sub:
             begin
                 LoadA = 1'b1;
                 shift = 1'b0;
@@ -147,6 +159,7 @@ module control (
 				LoadA = 1'b0;
                 shift = 1'b0;
                 fn = 1'b0;
+                clearXA = 1'b0;
 			end
 		endcase
     end
@@ -161,23 +174,31 @@ module control (
 
 			s_start :    
 			begin
-				if (run && M==0) 
-				begin
-					next_state = s_count0_shift;
-				end
-                else if (run && M==1) 
-                begin
-                    next_state = s_count0_add;
-                end
+				if (run)
+			    begin
+			         next_state = resetXA;
+			    end
 			end
+			
+			resetXA:
+			begin
+			     if (M0 == 0)
+			     begin
+			         next_state = s_count0_shift;
+			     end else
+			     begin
+			         next_state = s_count0_add;
+			     end
+			end
+
 
             s_count0_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count1_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
                     next_state = s_count1_add;
                 end
@@ -185,11 +206,11 @@ module control (
 
             s_count1_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count2_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
                     next_state = s_count2_add;
                 end
@@ -197,11 +218,11 @@ module control (
 
             s_count2_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count3_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
                     next_state = s_count3_add;
                 end
@@ -209,11 +230,11 @@ module control (
 
             s_count3_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count4_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
                     next_state = s_count4_add;
                 end
@@ -221,11 +242,11 @@ module control (
 
             s_count4_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count5_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
                     next_state = s_count5_add;
                 end
@@ -233,11 +254,11 @@ module control (
 
             s_count5_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count6_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
                     next_state = s_count6_add;
                 end
@@ -245,13 +266,13 @@ module control (
 
             s_count6_shift :
             begin
-                if (M == 0)
+                if (M1 == 0)
                 begin
                     next_state = s_count7_shift;
                 end
-                else if (M==1) 
+                else if (M1==1) 
                 begin
-                    next_state = s_count7_add;
+                    next_state = s_count7_sub;
                 end
             end 
 
@@ -267,7 +288,7 @@ module control (
             s_count4_add :    next_state = s_count4_shift;
             s_count5_add :    next_state = s_count5_shift;
             s_count6_add :    next_state = s_count6_shift;
-            s_count7_add :    next_state = s_count7_shift;
+            s_count7_sub :    next_state = s_count7_shift;
 
 			s_done :    
 			begin
