@@ -5,6 +5,7 @@ module testbench();
     
     logic       Clk;
 
+<<<<<<< HEAD
 //    logic [7:0] sw_i; 
 //    logic       run_i;
 //    logic       reset_load_clear_i;
@@ -25,6 +26,28 @@ module testbench();
 	
 	logic [7:0] A, B, S;
 	logic fn, X;
+=======
+   logic [7:0] sw_i; 
+   logic       run_i;
+   logic       reset_load_clear_i;
+//    logic       M;
+   logic       run;
+//    logic       reset;
+
+   logic [7:0] A_val;
+	logic [7:0] B_val;
+   logic       X_val;
+	logic [7:0] hex_seg_a;
+	logic [3:0] hex_grid_a;
+   logic [7:0] hex_seg_b;
+	logic [3:0] hex_grid_b;
+	logic       shift;
+	logic       fn;
+	logic       LoadA;
+	
+	// logic [7:0] A, B, S;
+	// logic fn, X;
+>>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
 
 //    logic Reset, Shift_In, Load, Shift_En, Shift_Out;
 //    logic [7:0] D, Data_Out;
@@ -57,6 +80,7 @@ module testbench();
 //        reset_load_clear_i = 1;
 //        run_i <= 0;
 //        sw_i <= 8'h00;
+<<<<<<< HEAD
 
 //        repeat (5) @(posedge Clk);
 
@@ -82,6 +106,48 @@ module testbench();
 //        ans_1 <= 16'b1111111001100011;
 
 //        repeat (20) @(posedge Clk);
+=======
+
+//        repeat (5) @(posedge Clk);
+
+//        reset_load_clear_i <= 0;
+
+//        repeat (5) @(posedge Clk);
+
+//        sw_i <= 8'b11000101;
+//        repeat (2) @(posedge Clk);
+//        reset_load_clear_i <= 1;
+//        repeat (2) @(posedge Clk);
+//        reset_load_clear_i <= 0;
+
+//        repeat (5) @(posedge Clk);
+
+//        sw_i <= 8'b00000111;
+
+//        repeat (5) @(posedge Clk);
+
+//        run_i <= 1;
+//        repeat (2) @(posedge Clk);
+//        run_i <= 0;
+//        ans_1 <= 16'b1111111001100011;
+
+//        repeat (20) @(posedge Clk);
+
+        reset_load_clear_i <= 0;
+        #5;
+        sw_i <= 8'h01;
+        #5;
+        reset_load_clear_i <= 1;
+        #5;
+        reset_load_clear_i <= 0;
+        #5;
+        sw_i <= 8'h02;
+        #5;
+        run <= 1;
+
+
+
+>>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
 
 
         $display("Done");
