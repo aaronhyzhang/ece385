@@ -59,11 +59,6 @@ module multiplier_toplevel(
     
 
     //instance of add/sub, assigns X_val and Sum
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
     ADD_SUB9 adder(
         .A              (A_val), 
         .B              (sw_s), 
@@ -77,7 +72,6 @@ module multiplier_toplevel(
         .run            (run_s),
         .M              (M),
         .reset          (reset_load_clear_s),
-<<<<<<< HEAD
 
         .shift          (Shift_En),
         .fn             (fn),
@@ -96,41 +90,6 @@ module multiplier_toplevel(
 		.Shift_Out      (A_out),
 		.Data_Out       (A_val)
 	);
-=======
-
-        .shift          (Shift_En),
-        .fn             (fn),
-        .LoadA          (LoadA)
-    );
-
-            reg_8 reg_A (
-                .Clk            (Clk), 
-                .Reset          (reset_load_clear_s),
-
-                .Shift_In       (X_out), 
-                .Load           (LoadA), 
-                .Shift_En       (Shift_En),
-                .D              (Sum),
-
-                .Shift_Out      (A_out),
-                .Data_Out       (A_val)
-            );
-        
-
-
-    // reg_8 reg_A (
-	// 	.Clk            (Clk), 
-	// 	.Reset          (reset_load_clear_s),
-
-	// 	.Shift_In       (X_out), 
-	// 	.Load           (LoadA), 
-	// 	.Shift_En       (Shift_En),
-	// 	.D              (Sum),
-
-	// 	.Shift_Out      (A_out),
-	// 	.Data_Out       (A_val)
-	// );
->>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
 
     reg_8 reg_B (
 		.Clk            (Clk), 

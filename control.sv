@@ -35,11 +35,7 @@ module control (
                 LoadA = 1'b1;
 				shift = 1'b0;
                 fn = 1'b0;
-<<<<<<< HEAD
 			end
-=======
-   			end
->>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
 
             s_count0_add:
             begin
