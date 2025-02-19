@@ -5,7 +5,6 @@ module testbench();
     
     logic       Clk;
 
-<<<<<<< HEAD
 //    logic [7:0] sw_i; 
 //    logic       run_i;
 //    logic       reset_load_clear_i;
@@ -26,7 +25,6 @@ module testbench();
 	
 	logic [7:0] A, B, S;
 	logic fn, X;
-=======
    logic [7:0] sw_i; 
    logic       run_i;
    logic       reset_load_clear_i;
@@ -47,7 +45,6 @@ module testbench();
 	
 	// logic [7:0] A, B, S;
 	// logic fn, X;
->>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
 
 //    logic Reset, Shift_In, Load, Shift_En, Shift_Out;
 //    logic [7:0] D, Data_Out;
@@ -80,7 +77,6 @@ module testbench();
 //        reset_load_clear_i = 1;
 //        run_i <= 0;
 //        sw_i <= 8'h00;
-<<<<<<< HEAD
 
 //        repeat (5) @(posedge Clk);
 
@@ -106,7 +102,6 @@ module testbench();
 //        ans_1 <= 16'b1111111001100011;
 
 //        repeat (20) @(posedge Clk);
-=======
 
 //        repeat (5) @(posedge Clk);
 
@@ -144,11 +139,6 @@ module testbench();
         sw_i <= 8'h02;
         #5;
         run <= 1;
-
-
-
->>>>>>> 58083b2bce816c5a4f3f56dc3eb24088e6dde172
-
 
         $display("Done");
         $finish();
