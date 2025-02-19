@@ -45,16 +45,15 @@ module multiplier_toplevel(
     //logic [15:0] out;
 
     //internal signals
-    logic M;
     logic A_out;
+    logic B_out;
     logic X_out;
+    logic X_new;
     logic LoadA;                //from control unit
     logic Shift_En;             //from contol unit
     logic [7:0] Sum;            //from adder
     logic fn;                   //from control unit
     logic start;        // initailize A ot be 0
-
-    assign M = B_val[0];
 
     
 
@@ -64,13 +63,14 @@ module multiplier_toplevel(
         .B              (sw_s), 
         .fn             (fn), 
             
-        .S              (Sum) 
+        .S              (Sum),
+        .X              (X_new)
     );
 
     control control_unit(
         .Clk            (Clk),
         .run            (run_s),
-        .M              (M),
+        .M              (B_out),
         .reset          (reset_load_clear_s),
 
         .shift          (Shift_En),
@@ -100,7 +100,7 @@ module multiplier_toplevel(
 		.Shift_En       (Shift_En),
 		.D              (sw_s),
 
-		.Shift_Out      (),         //not used
+		.Shift_Out      (B_out),
 		.Data_Out       (B_val)
 	);
 
@@ -108,10 +108,10 @@ module multiplier_toplevel(
         .Clk            (Clk),
         .Reset          (reset_load_clear_s),
 
-        .Shift_In       (Sum[7]),
+        .Shift_In       (X_out),
         .Load           (LoadA),
         .Shift_En       (Shift_En),
-        .D              (Sum[7]),
+        .D              (X_new),
 
         .Shift_Out      (X_out),
         .Data_Out       (X_val)

@@ -1,14 +1,15 @@
-module bitadd8 (
+module bitadd9 (
     input logic [7:0] A,
     input logic [7:0] B,
     input logic       fn,
 
-    output logic [7:0] S
+    output logic [7:0] S,
+    output logic       X
 );
 
-    logic [7:0] fn_8bit;
+    logic [8:0] fn_8bit;
     
-    logic c1, c2, c3, c4, c5, c6, c7;
+    logic c1, c2, c3, c4, c5, c6, c7, c8;
 
     assign fn_8bit = {8{fn}};
 
@@ -22,6 +23,7 @@ module bitadd8 (
     full_adder FA4(.x(A[4]), .y(newB[4]), .z(c4), .s(S[4]), .c(c5));
     full_adder FA5(.x(A[5]), .y(newB[5]), .z(c5), .s(S[5]), .c(c6));
     full_adder FA6(.x(A[6]), .y(newB[6]), .z(c6), .s(S[6]), .c(c7));
-    full_adder FA7(.x(A[7]), .y(newB[7]), .z(c7), .s(S[7]), .c());
+    full_adder FA7(.x(A[7]), .y(newB[7]), .z(c7), .s(S[7]), .c(c8));
+    full_adder FA8(.x(A[7]), .y(newB[7]), .z(c8), .s(X), .c());
 
 endmodule

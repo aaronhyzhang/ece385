@@ -3,6 +3,7 @@ module tb_modular;
     timeunit 10ns;  // This is the amount of time represented by #1 
     timeprecision 1ns;
     logic clk;
+    
     logic reset;
     logic run;
     logic [7:0] A, B;
