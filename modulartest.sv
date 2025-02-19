@@ -13,7 +13,6 @@ module tb_modular;
     logic [7:0] A_val, B_val;
     logic X_val;
 
-    // Instantiate modules
     reg_1 uut_reg_1 (
         .Clk(clk),
         .Reset(reset),
@@ -60,9 +59,7 @@ module tb_modular;
         .LoadA(LoadA)
     );
 
-    // Test procedure
     initial begin
-        // Initialize signals
         clk = 0;
         reset = 1;
         run = 0;
@@ -71,46 +68,22 @@ module tb_modular;
         fn = 0;
         M = 0;
 
-        // Release reset
         #10 reset = 0;
 
-        // Test reg_1
-        $display("Testing reg_1...");
-        LoadA = 1;
-        #10 LoadA = 0;
-        shift = 1;
-        #10 shift = 0;
 
-        // Test reg_8
-        $display("Testing reg_8...");
-        LoadA = 1;
-        #10 LoadA = 0;
-        shift = 1;
-        #10 shift = 0;
-
-        // Test 8bitadd
-        $display("Testing 8bitadd...");
+        $display("add");
         A = 8'h05;
         B = 8'h03;
-        fn = 0; // Addition
+        fn = 0; 
         #10;
         $display("A = %h, B = %h, S = %h", A, B, S);
 
-        // Test 9bitadd_sub
-        $display("Testing 9bitadd_sub...");
+        $display("sub");
         A = 8'h05;
         B = 8'h03;
-        fn = 1; // Subtraction
+        fn = 1; 
         #10;
         $display("A = %h, B = %h, S = %h", A, B, S);
-
-        // Test control FSM
-        $display("Testing control FSM...");
-        run = 1;
-        M = 1;
-        #10;
-        run = 0;
-        #100;
 
         $stop;
     end

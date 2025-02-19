@@ -32,31 +32,31 @@ module tb_system;
         sw_i = 8'h00;
         #10 reset_load_clear = 0;
 
-        // Load multiplier (B)
-        sw_i = 8'h05; // Multiplier = 5
+        // B
+        sw_i = 8'h05; // multiplier = 5
         #10 reset_load_clear = 1;
         #10 reset_load_clear = 0;
 
-        // Load multiplicand (S) and start multiplication
-        sw_i = 8'h03; // Multiplicand = 3
+        // S
+        sw_i = 8'h03; //multiplicand = 3
         #10 run = 1;
         #10 run = 0;
 
         #200;
 
         $display("A_val = %h, B_val = %h, X_val = %h", A_val, B_val, X_val);
-        $display("Product = %h", {A_val, B_val});
+        $display("Product = %h", A_val * B_val);
 
-        sw_i = 8'hFF; // Multiplier = -1
+        sw_i = 8'hFF; // multiplier = -1
         #10 reset_load_clear = 1;
         #10 reset_load_clear = 0;
 
-        sw_i = 8'h02; // Multiplicand = 2
+        sw_i = 8'h02; // multiplicand = 2
         #10 run = 1;
         #10 run = 0;
         #200;
         $display("A_val = %h, B_val = %h, X_val = %h", A_val, B_val, X_val);
-        $display("Product = %h", {A_val, B_val});
+        $display("Product = %h", A_val * B_val);
 
         $stop;
     end

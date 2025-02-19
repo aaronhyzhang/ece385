@@ -1,29 +1,28 @@
 module control (
-    input logic clk, run, reset_load_clear, M,
+    input logic Clk, run, M, reset,
     
-    output logic clear_Ld, shift, fn, LoadA
+    output logic shift, fn, LoadA
 );
 
-    //assign clear_Ld = reset_load_clear;
 
     //Declare signals cur_state, next_state based on this enum
 	enum logic [5:0] {
 		s_start, 
 		s_count0_shift, 
         s_count0_add,
-		s_count1_shift
+		s_count1_shift,
         s_count1_add, 
         s_count2_shift, 
         s_count2_add,
-		s_count3_shift
+		s_count3_shift,
         s_count3_add, 
         s_count4_shift, 
         s_count4_add,
-		s_count5_shift
+		s_count5_shift,
         s_count5_add, 
         s_count6_shift, 
         s_count6_add,
-		s_count7_shift
+		s_count7_shift,
         s_count7_add,
 		s_done
 	} curr_state, next_state; 
@@ -33,15 +32,107 @@ module control (
 		unique case (curr_state) 
 			s_start: 
 			begin
-                LoadA = 1'b0;
+                LoadA = 1'b1;
 				shift = 1'b0;
                 fn = 1'b0;
-                clear_Ld = reset_load_clear;
-			end
+   			end
 
+            s_count0_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
+            s_count1_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
+            s_count2_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
+            s_count3_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
+            s_count4_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
+            s_count5_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
+            s_count6_add:
+            begin
+                LoadA = 1'b1;
+                shift = 1'b0;
+                fn = 1'b0;
+            end
             s_count7_add:
             begin
+                LoadA = 1'b1;
+                shift = 1'b0;
                 fn = 1'b1;
+            end
+
+            s_count0_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count1_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count2_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count3_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count4_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count5_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count6_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
+            end
+            s_count7_shift:
+            begin
+                LoadA = 1'b0;
+                shift = 1'b1;
+                fn = 1'b0;
             end
 
 			s_done: 
@@ -49,12 +140,13 @@ module control (
                 LoadA = 1'b0;
                 shift = 1'b0;
                 fn = 1'b0;
-                clear_Ld = 1'b0;
 			end
 
-			default:  //default case, can also have default assignments for Ld_A and Ld_B before case
+			default:  //default case, can also have default assignments for Ld_A
 			begin 
-				
+				LoadA = 1'b0;
+                shift = 1'b0;
+                fn = 1'b0;
 			end
 		endcase
     end
@@ -190,9 +282,9 @@ module control (
 
 
     //updates flip flop, current state is the only one
-    always_ff @(posedge clk)    
+    always_ff @(posedge Clk)    
     begin
-        if (reset_load_clear)
+        if (reset)
         begin
             curr_state <= s_start;
         end
