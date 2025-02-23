@@ -42,7 +42,7 @@ module control (
 	output logic		gate_pc,
 	output logic		gate_mdr,
 						
-	output logic [1:0]	pcmux,
+	output logic [1:0]	pcmux_select,
 	
 	//You should add additional control signals according to the SLC-3 datapath design
 
@@ -85,7 +85,7 @@ module control (
 		gate_pc = 1'b0;
 		gate_mdr = 1'b0;
 		 
-		pcmux = 2'b00;
+		pcmux_select = 2'b00;
 		
 	
 		// Assign relevant control signals based on current state
@@ -95,7 +95,7 @@ module control (
 				begin 
 					gate_pc = 1'b1;
 					ld_mar = 1'b1;
-					pcmux = 2'b00;
+					pcmux_select = 2'b00;
 					ld_pc = 1'b1;
 				end
 			s_33_1, s_33_2, s_33_3 : //you may have to think about this as well to adapt to ram with wait-states
