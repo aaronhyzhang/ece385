@@ -3,9 +3,9 @@ module load_reg #(
                              // so we don't have to make a new module for every register size
                              // Here, the default is set to 1
 ) (
-	input  logic	    clk, 
-	input  logic	    reset, 
-	input  logic	    load,
+	input  logic	    		  clk, 
+	input  logic	    		  reset, 
+	input  logic	    		  load,
 	input  logic [DATA_WIDTH-1:0] data_i, // set input/output size based on parameter
 
 	output logic [DATA_WIDTH-1:0] data_q
