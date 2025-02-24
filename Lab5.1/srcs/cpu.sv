@@ -99,7 +99,7 @@ MUX_2bit mdr_mux (
     .out    (mdr_next)
 );
 
-assign led_o = ir;
+assign led_o = pc;
 assign hex_display_debug = ir;
 
 load_reg #(.DATA_WIDTH(16)) ir_reg (
