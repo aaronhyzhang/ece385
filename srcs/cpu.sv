@@ -72,10 +72,10 @@ control cpu_control (
 );
 
 MUX_4bit bus_gates ( 
-    .in0 ({16{Z}}),
+    .in0 ({16{0}}),
     .in1 (pc),
     .in2 (mdr),
-    .in3 ({16{Z}}),
+    .in3 ({16{0}}),
     .select ({gate_mdr, gate_pc}),
 
     .out (bus)
@@ -83,8 +83,8 @@ MUX_4bit bus_gates (
 
 MUX_4bit pc_mux ( 
     .in0    (pc + 1),
-    .in1    ({16{Z}}),
-    .in2    ({16{Z}}),
+    .in1    ({16{0}}),
+    .in2    ({16{0}}),
     .in3    (bus),
     .select (pcmux_select),
 
