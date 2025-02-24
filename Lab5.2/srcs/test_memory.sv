@@ -58,7 +58,7 @@ module test_memory (
 
 
 
-    initial begin      
+    initial begin    
         // Parse into machine code and write into file
         if (~init_external) begin
             ptr = $fopen("memory_contents.mif", "w");
