@@ -59,6 +59,11 @@ logic ben;
 
 logic [15:0] bus; // from bus_gates
 
+logic [2:0] SR1, DR;
+
+logic [15:0] SR1out, SR2out; // reg_file
+logic [15:0] reg_file [8];
+
 
 assign mem_addr = mar;
 assign mem_wdata = mdr;
@@ -71,7 +76,7 @@ control cpu_control (
     .*
 );
 
-MUX_4bit bus_gates ( 
+MUX_4to1_16bit bus_gates ( 
     .in0 ({16{0}}),
     .in1 (pc),
     .in2 (mdr),
@@ -81,7 +86,7 @@ MUX_4bit bus_gates (
     .out (bus)
 );
 
-MUX_4bit pc_mux ( 
+MUX_4to1_16bit pc_mux ( 
     .in0    (pc + 1),
     .in1    ({16{0}}),
     .in2    ({16{0}}),
@@ -91,7 +96,7 @@ MUX_4bit pc_mux (
     .out    (pc_next)
 );
 
-MUX_2bit mdr_mux ( 
+MUX_2to1_16bit mdr_mux ( 
     .in0    (bus),
     .in1    (mem_rdata),
     .select (mem_mem_ena),
@@ -143,5 +148,33 @@ load_reg #(.DATA_WIDTH(16)) mdr_reg (
 );
 
 
+MUX_2to1_3bit SR1 (
+    .in0(ir[11:9]),
+    .in1(ir[8:6]),
+    .select (), // depends on opcode (CU)
+
+    .out(SR1)
+);
+
+MUX_2bit DR (
+    .in0(ir[11:9]),
+    .in1(3'b111),
+    .select(), //from control
+
+    .out(DR)
+);
+
+reg_file reg_file (
+    .clk(clk),
+    .reset(reset),
+
+    .SR1 (SR1),
+    .SR2 (ir[2:0]),            //all from control unit
+    .ld_reg (ld_reg), 
+    .input (bus),      
+    
+    .SR1out (SR1out),
+    .SR2out (SR2out),
+);
 
 endmodule
