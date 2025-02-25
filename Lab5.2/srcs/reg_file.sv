@@ -2,7 +2,7 @@ module reg_file (
     input logic clk, reset,
     input logic [2:0] DR, SR2, SR1, // logic from MUXes
     input logic ld_reg,
-    input logic [15:0] input,
+    input logic [15:0] in,
 
     output logic [15:0] SR1out, SR2out
 );
@@ -29,39 +29,39 @@ module reg_file (
             unique case (DR)
                 3'b000:
                 begin
-                    load[0] = 1
+                    load[0] = 1;
                 end
                 3'b001:
                 begin
-                    load[1] = 1
+                    load[1] = 1;
                 end
                 3'b010:
                 begin
-                    load[2] = 1
+                    load[2] = 1;
                 end
                 3'b011:
                 begin
-                    load[3] = 1
+                    load[3] = 1;
                 end
                 3'b100:
                 begin
-                    load[4] = 1
+                    load[4] = 1;
                 end
                 3'b101:
                 begin
-                    load[5] = 1
+                    load[5] = 1;
                 end
                 3'b110:
                 begin
-                    load[6] = 1
+                    load[6] = 1;
                 end
                 3'b111:
                 begin
-                    load[7] = 1
+                    load[7] = 1;
                 end
             endcase 
         end
-        
+
     end
     
     
@@ -70,7 +70,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[0]), 
-        .data_i (input), 
+        .data_i (in), 
 
         .data_q (reg_file[0])
     );
@@ -79,7 +79,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[1]),
-        .data_i (input),
+        .data_i (in),
 
         .data_q (reg_file[1])
     );
@@ -88,7 +88,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[2]), 
-        .data_i (input), 
+        .data_i (in), 
 
         .data_q (reg_file[2])
     );
@@ -97,7 +97,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[3]),
-        .data_i (input),
+        .data_i (in),
 
         .data_q (reg_file[3])
     );
@@ -106,7 +106,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[4]), 
-        .data_i (input), 
+        .data_i (in), 
 
         .data_q (reg_file[4])
     );
@@ -115,7 +115,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[5]),
-        .data_i (input),
+        .data_i (in),
 
         .data_q (reg_file[5])
     );
@@ -124,7 +124,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[6]), 
-        .data_i (input), 
+        .data_i (in), 
 
         .data_q (reg_file[6])
     );
@@ -133,7 +133,7 @@ module reg_file (
         .reset  (reset),
 
         .load   (load[7]),
-        .data_i (input),
+        .data_i (in),
 
         .data_q (reg_file[7])
     );
