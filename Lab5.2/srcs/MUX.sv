@@ -9,6 +9,7 @@ module MUX_4to1_16bit (
 );
     always_comb
     begin 
+        out = 16'h0000;
         if (select == 2'b00) begin
             out = in0;
         end

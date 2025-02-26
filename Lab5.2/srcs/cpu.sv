@@ -84,7 +84,7 @@ logic [15:0] SR2MUX_out; // sr2mux
 assign mem_addr = mar;
 assign mem_wdata = mdr;
 
-assign led_o = pc;
+assign led_o = ir;
 assign hex_display_debug = ir;
 
 logic [15:0] sext4_0; // sext 4:0 to 16       //all the sign extended versions of LSB of IR
@@ -94,7 +94,7 @@ logic [15:0] sext5_0; // sext 5:0 to 16
 assign sext5_0 = {{10{ir[5]}},{ir[5:0]}};
 
 logic [15:0] sext8_0; // sext 8:0 to 16
-assign sext8_0 = {{7{ir[4]}},{ir[8:0]}};
+assign sext8_0 = {{7{ir[8]}},{ir[8:0]}};
 
 logic [15:0] sext10_0; // sext 10:0 to 16
 assign sext10_0 = {{5{ir[10]}},{ir[10:0]}};
@@ -125,7 +125,7 @@ MUX_16to1_16bit bus_gates (
 );
 
 MUX_4to1_16bit pc_mux ( 
-    .in0    (pc + 1),
+    .in0    (pc + 1'b1),
     .in1    (MAR_MUX),
     .in2    ({16{0}}),
     .in3    (bus),

@@ -124,6 +124,9 @@ module control (
 		SR1_mux_select = 1'b0;
 		DR_mux_select = 1'b0;
 		//mio_en = 1'b0;
+		
+		mem_mem_ena = 1'b1;
+		mem_wr_ena = 1'b0;
 	
 		// Assign relevant control signals based on current state
 		case (state)
@@ -234,10 +237,10 @@ module control (
 			s_12 : //jmp
 				begin
 					ld_pc = 1'b1;
-					SR1_mux_select 1'b1;
+					SR1_mux_select = 1'b1;
 					ALU_select = 2'b11;
 					gate_alu = 1'b1;
-					pcmux_select 2'b11;
+					pcmux_select = 2'b11;
 				end
 			s_0 : //branch
 				begin 
@@ -284,7 +287,7 @@ module control (
 						4'b1001 :
 							state_nxt = s_9;
 						4'b1100 :
-							state_next = s_12;
+							state_nxt = s_12;
 						4'b0100 :
 							state_nxt = s_4;
 						4'b0110 :
