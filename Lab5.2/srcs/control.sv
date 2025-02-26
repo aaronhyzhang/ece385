@@ -242,14 +242,12 @@ module control (
 					gate_alu = 1'b1;
 					pcmux_select = 2'b11;
 				end
-			s_0 : //branch
+			s_22 : //do the branch
 				begin 
-					if(ben) begin
-						ld_pc = 1'b1;
-						ADDR1MUX_select = 1'b0;
-						ADDR2MUX_select = 2'b01;
-						pcmux_select = 2'b01;
-					end
+                    ld_pc = 1'b1;
+                    ADDR1MUX_select = 1'b0;
+                    ADDR2MUX_select = 2'b01;
+                    pcmux_select = 2'b01;
 				end
 			default : ;
 		endcase
@@ -332,7 +330,14 @@ module control (
 			s_12 :
 				state_nxt = s_18;
 			s_0 : // branch
-				state_nxt = s_22;
+			    begin
+			      if (ben) begin 
+			         state_nxt = s_22;
+			      end
+			      else begin
+			         state_nxt = s_18;
+			      end
+			    end
 			s_22 :
 				state_nxt = s_18;
 			pauseIR1 : 

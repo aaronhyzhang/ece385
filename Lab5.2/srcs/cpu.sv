@@ -84,7 +84,7 @@ logic [15:0] SR2MUX_out; // sr2mux
 assign mem_addr = mar;
 assign mem_wdata = mdr;
 
-assign led_o = ir;
+assign led_o = pc;
 assign hex_display_debug = ir;
 
 logic [15:0] sext4_0; // sext 4:0 to 16       //all the sign extended versions of LSB of IR
@@ -204,7 +204,7 @@ load_reg #(.DATA_WIDTH(1)) ben_reg (
     .reset(reset),
 
     .load(ld_ben),
-    .data_i((nzp_out[0] & ir[11]) | (nzp_out[1] & ir[10]) | (nzp_out[2] & ir[9])),
+    .data_i((nzp_out[2] & ir[11]) | (nzp_out[1] & ir[10]) | (nzp_out[0] & ir[9])),
 
     .data_q(ben)
 );
