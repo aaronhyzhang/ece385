@@ -1,7 +1,7 @@
 module nzp (
     input logic clk, reset,
     input logic [15:0] bus,
-    input loigc      ld_cc, // from control unit
+    input logic      ld_cc, // from control unit
 
     output logic [2:0] nzp
 );

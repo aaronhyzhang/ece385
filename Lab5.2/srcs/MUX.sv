@@ -37,19 +37,19 @@ module MUX_16to1_16bit (
     always_comb
     begin 
         if (select == 4'b1000) begin
-            out = in[0];
+            out = in0;
         end
         else if (select == 4'b0100) begin
-            out = in[1];
+            out = in1;
         end
         else if (select == 4'b0010) begin
-            out = in[2];
+            out = in2;
         end
         else if (select == 4'b0001) begin
-            out = in[3];
+            out = in3;
         end
         else begin
-            out = {16{Z}};
+            out = 16'bZ;
         end
     end
 endmodule

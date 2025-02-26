@@ -37,13 +37,15 @@ module cpu (
 );
 
 
-// Internal connections, follow the datapath block diagram and add the additional needed signals
+//CONTROL UNIT SIGNALS
 logic ld_mar; 
 logic ld_mdr; 
 logic ld_ir; 
 logic ld_pc; 
 logic ld_led;
 logic ld_cc;
+logic ld_reg;
+logic ld_ben;
 
 logic gate_pc;
 logic gate_mdr;
@@ -52,18 +54,22 @@ logic gate_marmux;
 
 logic [1:0] pcmux_select;
 logic [1:0] ALU_select;
-logic [1:0] ADDR2MUX_select; // From control unit select signal for ADDR1 and 2 MUX
+logic [1:0] ADDR2MUX_select; 
 logic ADDR1MUX_select;
 logic SR2MUX_select;
 logic SR1_mux_select;
 logic DR_mux_select;
+//logic mio_en;
+
+////////////////////////////////////////////////////
+
 
 logic [15:0] mar; 
 logic [15:0] mdr;
 logic [15:0] mdr_next;
 logic [15:0] ir;
 logic [15:0] pc;
-logic [15:0] alu;
+logic [15:0] alu_out;
 logic [15:0] pc_next;   //output of pc_mux
 logic ben;
 
@@ -85,10 +91,10 @@ logic [15:0] sext4_0; // sext 4:0 to 16       //all the sign extended versions o
 assign sext4_0 = {{11{ir[4]}},{ir[4:0]}};
 
 logic [15:0] sext5_0; // sext 5:0 to 16
-assign sext5_0 = {{10{ir[5]}},{ir[5:0]}}
+assign sext5_0 = {{10{ir[5]}},{ir[5:0]}};
 
 logic [15:0] sext8_0; // sext 8:0 to 16
-assign sext8_0 = {{7{ir[4]}},{ir[8:0]}}
+assign sext8_0 = {{7{ir[4]}},{ir[8:0]}};
 
 logic [15:0] sext10_0; // sext 10:0 to 16
 assign sext10_0 = {{5{ir[10]}},{ir[10:0]}};
@@ -96,7 +102,7 @@ assign sext10_0 = {{5{ir[10]}},{ir[10:0]}};
 logic [15:0] ADDR1MUX_out, ADDR2MUX_out, MAR_MUX;
 assign MAR_MUX = ADDR1MUX_out + ADDR2MUX_out;
 
-logic [2:0] nzp; // nzp
+logic [2:0] nzp_out; // nzp
 
 
 // State machine, you need to fill in the code here as well
@@ -108,7 +114,7 @@ control cpu_control (
 );
 
 MUX_16to1_16bit bus_gates ( 
-    .in0 (alu),
+    .in0 (alu_out),
     .in1 (pc),
     .in2 (mdr),
     .in3 (MAR_MUX),
@@ -120,7 +126,7 @@ MUX_16to1_16bit bus_gates (
 
 MUX_4to1_16bit pc_mux ( 
     .in0    (pc + 1),
-    .in1    ({16{0}}),
+    .in1    (MAR_MUX),
     .in2    ({16{0}}),
     .in3    (bus),
     .select (pcmux_select),
@@ -131,7 +137,7 @@ MUX_4to1_16bit pc_mux (
 MUX_2to1_16bit mdr_mux ( 
     .in0    (bus),
     .in1    (mem_rdata),
-    .select (mem_mem_ena),
+    .select (mem_mem_ena),  //mio_en
 
     .out    (mdr_next)
 );
@@ -193,6 +199,16 @@ MUX_2to1_3bit DR_mux (
     .out(DR)
 );
 
+load_reg #(.DATA_WIDTH(1)) ben_reg (
+    .clk(clk),
+    .reset(reset),
+
+    .load(ld_ben),
+    .data_i((nzp_out[0] & ir[11]) | (nzp_out[1] & ir[10]) | (nzp_out[2] & ir[9])),
+
+    .data_q(ben)
+);
+
 reg_file reg_file (
     .clk(clk),
     .reset(reset),
@@ -200,10 +216,11 @@ reg_file reg_file (
     .SR1 (SR1),
     .SR2 (ir[2:0]),            //all from control unit
     .ld_reg (ld_reg), 
-    .input (bus),      
+    .in (bus),  
+    .DR (DR),   
     
     .SR1out (SR1out),
-    .SR2out (SR2out),
+    .SR2out (SR2out)
 );
 
 MUX_2to1_16bit SR2mux (
@@ -219,7 +236,7 @@ ALU alu (
     .SR2MUX_out (SR2MUX_out),
     .ALUK (ALU_select), // control unit
 
-    .out (alu) // into bus gate
+    .out (alu_out) // into bus gate
 );
 
 MUX_4to1_16bit ADDR2MUX (
@@ -229,7 +246,7 @@ MUX_4to1_16bit ADDR2MUX (
     .in3(16'h0000),
     .select(ADDR2MUX_select),   //from control
 
-    .out(ADDER2MUX_out)
+    .out(ADDR2MUX_out)
 );
 
 MUX_2to1_16bit ADDR1MUX (
@@ -247,7 +264,7 @@ nzp nzp (
     .bus (bus),
     .ld_cc (ld_cc), // control unit
 
-    .nzp(nzp)
+    .nzp(nzp_out)
 );
 
 

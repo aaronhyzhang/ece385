@@ -14,11 +14,15 @@ always_comb begin
         end
         2'b01 : // AND
         begin
-            out = SR1out & SR2Mux_out;
+            out = SR1out & SR2MUX_out;
         end
         2'b10 : // NOT
         begin
             out = ~SR1out;
+        end
+        2'b11: //pass 
+        begin 
+            out = SR1out;
         end
     default :;
     endcase
