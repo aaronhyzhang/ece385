@@ -1,0 +1,13 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_usb-GDB,org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-GDB
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-Default/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-Default/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-GDB/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-GDB/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-GDB_7/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_block-GDB_8/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_usb-GDB/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:Debugger_mb_usb-GDB/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
