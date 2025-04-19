@@ -30,23 +30,94 @@ module testbench ();
         run_i <= 0;
         continue_i <= 0;
         sw_i <= 16'h0000;
-
-        // sw_i = 16'h0002;
-
+        #50
+        sw_i <= 16'h005A;
+        #50
+        run_i <= 1;
         #2
-        reset = 0;
+        run_i <= 0;
+        #50
+        sw_i <= 16'h0003;
+        #50
+        sw_i <= 16'h0002;
+        #50
+        sw_i <= 16'h0003;
+        #50
+        continue_i <= 1;
         #2
-        run_i = 1'b1;
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
         #2
-        continue_i = 1'b1;
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
         #2
-        continue_i = 1'b0;
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
         #2
-        continue_i = 1'b1;
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
         #2
-        continue_i = 1'b0;
-        
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
+        continue_i <= 1;
+        #2
+        continue_i <= 0;
+        #50
 
     end
 
 endmodule
+
+
+
+
+        reset = 1;
+        run_i <= 0;
+        continue_i <= 0;
+        sw_i <= 16'h0000;
+        #50
+        

@@ -110,10 +110,12 @@ int main() {
 				rcode = mousePoll(&buf);
 				if (rcode == hrNAK) {
 					//NAK means no new data
+					printHex (0x00000000, 2);
 					continue;
 				} else if (rcode) {
 					xil_printf("Rcode: ");
 					xil_printf("%x \n", rcode);
+					printHex (buf.button + 0x00000000, 2);
 					continue;
 				}
 				xil_printf("X displacement: ");
@@ -122,6 +124,9 @@ int main() {
 				xil_printf("%d ", (signed char) buf.Ydispl);
 				xil_printf("Buttons: ");
 				xil_printf("%x\n", buf.button);
+				printHex (buf.button + (buf.Ydispl<<8) + (buf.Xdispl<<16) + + (0x00<<24), 2); // outputs keycodes onto USB Channel 2
+				xil_printf("\n");
+
 			}
 		} else if (GetUsbTaskState() == USB_STATE_ERROR) {
 			if (!errorflag) {
